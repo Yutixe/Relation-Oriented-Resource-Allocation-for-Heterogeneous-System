@@ -1,0 +1,21 @@
+Notes from Heuristics for Vector Bin Packing [Pan11] 
+and Lower bounds and algorithms for the 2-dimensional vector packing problem[Cap01]
+--Focus on the Experiments model, the way to set up the experiment environment.
+
+Invloving classes of randomly generated instances to model the 2-dimensional case.
+Using two variables c,d to represent the bins capacities on different dimensions, respectively.
+Using Wj and Vj to represent the weights of item j on different dimensions, respectively.
+Using u.d.[a,b] to represent the uniformly distribution of the value for weights of item in the interval [a,b]
+
+In [Cap01] and [Pan11], the dimensions in the first six classes are independently sampled.
+In classes seven and eight, the dimensions are correlated. They achieve positive correlation by setup the domain
+of the Vj to be a monotonic function from Wj while achieve negative correlation by setup it to be a inverse function in domain.
+
+In [Pan11]:
+Trivial way to extend to multi-dimension is to set dimension (2i-1) and (2i) are correlated as dimension 1 and 2,
+while independent of the other dimensions. As for generate negative correlation across all dimensions:
+Random variables to denote the random distribution of balls in each dimension, totally 2 times of the dimensions.
+Multiply with an random coeffieient from [10,40] and over two (Why?). Further noise by adding a random value from [0,1].
+Ignored the overwight item.  
+
+ 
