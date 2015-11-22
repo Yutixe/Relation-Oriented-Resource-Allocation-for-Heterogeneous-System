@@ -13,6 +13,7 @@
 \usepackage{listings}
 \usepackage{tikz}
 \usepackage{pdfpages}
+%\usepackage{natbib}
 
 
 \begin{document}
@@ -71,35 +72,6 @@ it remains to create a metric or say ranking function to compare the performance
 \section{Conclusions and Future work}
 {\it All good projects conclude with an objective evaluation of the project's successes and failures, and suggestions for future work that can take the project further. It is important to understand that there is no such thing as a perfect project. Even the very best pieces of work have their limitations and you are expected to provide a proper critical appraisal of what you have done. Your assessors are bound to spot the limitations of your work and you are expected to be able to do the same.}
 
-\begin{thebibliography}{fi99}
-
-\bibitem[Bes06] {b1} C. Bessiere. Constraint Propagation, Chapter 3 of {\it Handbook of Constraint Programming} (eds. Rossi, van Beek and Walsh), Elsevier, 2006.
-
-\bibitem[Bra13] {b2} F. Brandao, J. P. Pedroso. Bin Packing and Related Problems: General Arc-flow Formulation with Graph Compression. {\it Technical Report DCC-2013-08}, Faculdade de Ciências da Universidade do Porto, Portugal. 2013.
-
-\bibitem[Dav02] {d1} B. A. Davey and H. A. Priestley. {\it Introduction to Lattices and Order} Cambridge
-University Press, Cambridge, 2002.
-
-\bibitem[Mac85] {mf} A. K. Mackworth and E. C. Freuder. The complexity of some polynomial network consistency
-algorithms for constraint satisfaction problems. {\it Artificial Intelligence}, 25:65-74, 1985.
-
-\bibitem[Pan11] {p0} R. Panigrahy, K. Talwar, L. Uyeda, and U. Wieder. Heuristics for Vector Bin Packing {\it Microsoft Research.} 2011
-
-\bibitem[Pro93] {p1} P. Prosser. Hybrid Algorithms for the Constraint Satisfaction Problem, {\it Computational Intelligence}, Volume 9, Issue 3, pp268-299, 1993.
-
-\bibitem[Rai12] {r1} A. Rai, R. Bhagwan, S. Guha. Generalized Resource Allocation for the Cloud {\it Proceedings of the 3rd Symposium on Cloud Computing}. Oct. 2012
-
-\bibitem[Sch04] {semival} M.P. Schellekens, The correspondence between partial metrics and semivaluations, {\it Theoretical Computer Science}, Volume 315, Issue 1, 5 May 2004, 135â€“149, 2004. 
-
-\bibitem[Sch14] {syrv} M. Schellekens, T. Yu, S. Romaguera, O. Valero, {\it On Semivaluations and Semimodularity} Domains XI International Workshop on domain theory and applications, Paris, France, 2014.
-
-\bibitem[Sti12] {s0} M. Stillwell, F. Vivien, H. Casanova. Virtual Machine Resource Allocation for Service Hosting on Heterogeneous Distributed Platforms {\it IEEE 26th International Parallel and Distributed Processing Symposium}. 2012
-
-\bibitem[Sti10] {s1} M. Stillwell, D. Schanzenbach, F. Vivien, H. Casanova. Resource Allocation Algorithms for Virtualized Service Hosting Platforms. {\it Journal of Parallel and Distributed Computing}. 2010
-
-\bibitem[Sti08] {s2} M. Stillwell, D. Schanzenbach, F. Vivien, H. Casanova. Resource Allocation using Virtual Clusters. Technical Report ICS2008-09-01, Information and Computer Sciences Dept., University of Hawai'i at Manoa, Sept. 2008
-
-\end{thebibliography}
 
 \section*{Appendices}
 {\it Appendices contain information that is peripheral to the main body of the report. Information typically included are things like program listings, tables, proofs, graphs, or any other material that would break up the theme of the text if it appeared in situ. Large program listings are rarely required, and should be compressed as much as possible, e.g., by printing in multiple columns and by using small font sizes, omitting inessential detail.}
@@ -187,7 +159,7 @@ and Lower bounds and algorithms for the 2-dimensional vector packing problem[Cap
 --Focus on the new Heuristics and Experiments model, the way to set up the experiment environment.
 \\\\
 FFD(First Fit Decreasing) Bin-centric view: Open only one bin at any time, place items into this bin from the largest suitable one. Close the bin when no item can be put in. Heuristics: Involve random choosing. Grasp[k]: pick a random one from the best k instead of the bext one. Bubblesearch: the kth best is chosen with a propobability proportional to $(1-p)^k$, for a suitable p.\\\\
-Analysis of FFDAvgSum, which is same as VP\_CPSum in\cite{s1}: For the case when some demands in a dimension always dominate the demands in the other dimension, FFDSum is more robust, the dimensions that are not scare can be assigned smaller coefficients and have a smaller impact on the ordering. Analysis \cite{s1}: the demands across the dimensions were simpled i.i.d.
+Analysis of FFDAvgSum, which is same as VP\_CPSum in\cite{s1}: For the case when some demands in a dimension always dominate the demands in the other dimension, FFDSum is more robust, the dimensions that are not scare can be assigned smaller coefficients and have a smaller impact on the ordering. Analysis \cite{speranza1999oaa}: the demands across the dimensions were simpled i.i.d.
 \\\\
 Invloving classes of randomly generated instances to model the 2-dimensional case.
 Using two variables c,d to represent the bins capacities on different dimensions, respectively.
@@ -205,10 +177,50 @@ Random variables to denote the random distribution of balls in each dimension, t
 Multiply with an random coeffieient from [10,40] and over two (Why?). Further noise by adding a random value from [0,1].
 Ignored the overwight item.  
 
+\subsubsection*{From [Van09]:}
+This work presents an automatic virtual resource management system for Cloud infrastructures (hosting service platforms). The main advantages include: it can automate the dynamic provisioning and placement of VMs; support for heterogeneous applications and workloads; support for arbitrary application topology.\\\\
+Focus on the automatic virtual resource management system:\\\\ 
+It contains a more complicate system model, or say architecture, to simulate the resource allocation scenario which is more closed to the really world cloud infrastructures. Instead of using bins and balls to represent, this model composed by Application Environment (AE), Local Decision Module (LDM), Global Decision Module (GDM) and datacenter which contains physical machines and VMs. Briefly, we can say that AE is faced to the application associated with specific performance goals; An application-specific LDM is associated with each AE to evaluate the process baed on the current workload using service-level metric and generate a utility function of the resource allocation; A GDM is used to interact with each LDM and the real-datacenter. It is the core of this system which contains the Constraint solver to determine the management actions based on the input of LDM's utility functions and datacenter's system-level performance metrics. It works like a black box compared with LDM. We prefer to refer to the fig.2 in [Van09] of the system graph.\\\\
+Two utility functions in LDM: a fixed service-level function and a dynamic resource-level function which is communicated with GDM and updated for every iteration. VM allocation vectors in LDM are used for build up the upper bound constraints given by each application.\\\\
+As for the GDM: It involve two sequential process, one for determine VM allocation vectors for each application (VM Provisioning) and then for placing VMs and PMs and achieving optimisation (VM Packing). Beyond the constraints formulations based on the CPU and Memory, an interesting approach in VM Provisioning is using a coefficient to allow the administrator to trade-off between the fulfilment of the performance goals and the cost of operating the required resources. Another interesting method is illustrated during the optimisation process in VM Packing: To minimise the number of migration required to reach the new VM-to-PM assignment, or say minimise the reconfiguration to provide a strategy with few interim steps and maximum degree of parallelism.  
 
 \section*{User Guide}
 {\it For projects that result in a new piece of software, you should provide a proper user guide providing easily understood instructions on how to install and use it. A particularly useful approach is to treat the user guide as a walk through of a typical session, or set of sessions, that collectively display all the features of your software. Technical details of how the software works is rarely required. Keep it concise and simple. The extensive use of diagrams illustrating the software in action prove particularly helpful. The user guide is sometimes included as a chapter in the main body of the report, but is often better as an appendix to the main report.}
 
+
+%\bibliographystyle{plain}
+%\bibliography{biblio}
+
+
+\begin{thebibliography}{fi99}
+
+\bibitem[Bes06] {b1} C. Bessiere. Constraint Propagation, Chapter 3 of {\it Handbook of Constraint Programming} (eds. Rossi, van Beek and Walsh), Elsevier, 2006.
+
+\bibitem[Bra13] {b2} F. Brandao, J. P. Pedroso. Bin Packing and Related Problems: General Arc-flow Formulation with Graph Compression. {\it Technical Report DCC-2013-08}, Faculdade de Ciências da Universidade do Porto, Portugal. 2013.
+
+\bibitem[Dav02] {d1} B. A. Davey and H. A. Priestley. {\it Introduction to Lattices and Order} Cambridge
+University Press, Cambridge, 2002.
+
+\bibitem[Mac85] {mf} A. K. Mackworth and E. C. Freuder. The complexity of some polynomial network consistency
+algorithms for constraint satisfaction problems. {\it Artificial Intelligence}, 25:65-74, 1985.
+
+\bibitem[Pan11] {p0} R. Panigrahy, K. Talwar, L. Uyeda, and U. Wieder. Heuristics for Vector Bin Packing {\it Microsoft Research.} 2011
+
+\bibitem[Pro93] {p1} P. Prosser. Hybrid Algorithms for the Constraint Satisfaction Problem, {\it Computational Intelligence}, Volume 9, Issue 3, pp268-299, 1993.
+
+\bibitem[Rai12] {r1} A. Rai, R. Bhagwan, S. Guha. Generalized Resource Allocation for the Cloud {\it Proceedings of the 3rd Symposium on Cloud Computing}. Oct. 2012
+
+\bibitem[Sch04] {semival} M.P. Schellekens, The correspondence between partial metrics and semivaluations, {\it Theoretical Computer Science}, Volume 315, Issue 1, 5 May 2004, 135â€“149, 2004. 
+
+\bibitem[Sch14] {syrv} M. Schellekens, T. Yu, S. Romaguera, O. Valero, {\it On Semivaluations and Semimodularity} Domains XI International Workshop on domain theory and applications, Paris, France, 2014.
+
+\bibitem[Sti12] {s0} M. Stillwell, F. Vivien, H. Casanova. Virtual Machine Resource Allocation for Service Hosting on Heterogeneous Distributed Platforms {\it IEEE 26th International Parallel and Distributed Processing Symposium}. 2012
+
+\bibitem[Sti10] {s1} M. Stillwell, D. Schanzenbach, F. Vivien, H. Casanova. Resource Allocation Algorithms for Virtualized Service Hosting Platforms. {\it Journal of Parallel and Distributed Computing}. 2010
+
+\bibitem[Sti08] {s2} M. Stillwell, D. Schanzenbach, F. Vivien, H. Casanova. Resource Allocation using Virtual Clusters. Technical Report ICS2008-09-01, Information and Computer Sciences Dept., University of Hawai'i at Manoa, Sept. 2008
+
+\end{thebibliography}
 
 
 \end{document}
