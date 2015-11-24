@@ -54,18 +54,35 @@ $$ $$
 
 
 
-\section{Body of report}
+\section{Body of report-Original Ideas}
 {\it The central part of the report typically consists of three of four chapters detailing the technical work undertaken during the project. The structure of these chapters is highly project dependent. Usually they reflect the chronological development of the project, e.g., design, implementation, experimentation, and optimisation, although this is not always the best approach. However you choose to structure this part of the report, you should make it clear how you arrived at your chosen approach in preference to the other alternatives documented in the background. For implementation projects you should describe and justify the design of your system at some high level, for example by using any of the design methods taught during the first- and second-term courses, and should document any interesting problems with, or features of, your implementation. Integration and testing are also important to describe. Your supervisor will advise you on the most suitable structure for these middle sections.}
 $$ $$
-\subsection{Original Idea}
-Consider to handle with resource that have difficult-to-represent capacities. User's request may be special on different processing element (heterogeneous)or say the relation between them. Then we find the capacity of a cluster is the set of all allocation request that it can service. Try to give a relation between resource allocation requests(RAr):\\\\
+\subsection{RArs Relations}
+Consider to handle with resource that have difficult-to-represent capacities. User's request may be special on different processing element (heterogeneous)or say the relation between them. Then we find the capacity of a cluster is the set of all allocation request that it can service. Try to give a relation between resource allocation requests(RAr):
 \begin{definition}
-Given the relation $\preccurlyeq$ between RAr:
-$$ \forall \alpha \in a\ cluster\ device, \exists A,B \in RAr, such\ that\ A \preccurlyeq b\ \Leftrightarrow \alpha{(B)} \mapsto \alpha{(A)}. $$
-
+Given the relation $\preceq$ between RAr:
+$$ \forall \alpha \in a\ cluster\ device, \exists A,B \in RAr, such\ that\ A \preceq B\ \Leftrightarrow \alpha{(B)} \mapsto \alpha{(A)}. $$
 \end{definition}
-we say $\alpha{(B)}$ is true iff $\alpha$ can service B. Followed by defining a relation between user's requests, we can try to build a closed topology involving those requests. It will be more likely a lattice as we can ordered those requests by inclusion through the relation we just defined. As the topology inside a cluster device can be viewed as a littice as well by considering that the intersection of subset servers in cluster, it leads to a possibility to achieve mappings during the allocating process.\\\\ A trivial approach from the order theory is to consider Birkhoff's representation theory, which says modular lattice can be represented by down-sets of its corresponding partial order composed by join-irreducible elements. Then it is easy to view the RArs as downset of the lattice of cluster topology. Then 
+We say $\alpha{(B)}$ is true iff $\alpha$ can service B. Then we can define a parallel relation between RArs as follow:
+\begin{definition}
+$$ \forall A,B \in RAr, A\npreceq B\ \wedge B\npreceq A\ \Leftrightarrow A \parallel B. $$
+\end{definition}
+Followed by defining relations between user's requests, we can try to build a closed topology involving those requests. It will be more likely a lattice as we can ordered those requests by inclusion through the relation we just defined. As the topology inside a cluster device can be viewed as a littice as well by considering that the intersection of subset servers in cluster, it leads to a possibility to achieve mappings during the allocating process.\\\\ A trivial approach from the order theory is to consider Birkhoff's representation theory, which says modular lattice can be represented by down-sets of its corresponding partial order composed by join-irreducible elements. Then it is easy to view the RArs as downset of the lattice of cluster topology. Then 
 it remains to create a metric or say ranking function to compare the performance between different mapping.
+
+\subsection{RArs Model}
+Consider there is a common foundation of all RArs which is  a non resource needed request, we represent it as $\bot$. \\\\ 
+Say there are some kind of basic RArs which hold only one dimension of resource need. For instance, one RAr, named $A_{1}$, may only need some CPU capacity for computation while another, named $A_{2}$, just need some memory capacity to record information. It is easy to verify that not all cluster devices which can service $A_{1}$ can service $A_{2}$ and vise versa. So in this case, $A_{1}$ and $A_{2}$ are parallel while $\bot$ $\preceq$ $A_{1}$,$A_{2}$. Then it is also easy to extend this instance to the real case that there will be a large number $n$ of different dimensions of RArs, and we have the following two conditions:
+$$1)\ \forall i,j \in n, A_{i} \parallel A_{j} $$ 
+$$2)\ \forall i \in n, \bot \preceq A_{i}\ \ \ $$
+Now we consider the union of those RArs $A_{i}$. Some more complexed RArs may contain multi-dimensional resource allocation requests, which can be viewed as request different one-dimensional RArs simultaneously and this can be achieve by the union of $A_{i}$. In this way, we can define a n-dimensional RAr as follows:
+\begin{definition}
+$$ A^{n} = (\forall A_{i}\ i\in n) \bigwedge A_{i}. $$
+\end{definition}
+Finally, we say any kind of resource allocation request can be viewed as a n-dimensional RAr and the topology of RArs model can be built up as a partially order set through the relations we just defined.\\\\
+
+\noindent{\bf Note:} Instead of the theoretical analysis as above, another way of generating the topology of resource allocation requests, or more generally say {\it informations}, is through real data experiment. One instance of this approach can be refer to [MM00] which tested the web-service requests and also resulted a partially order set. 
+
 \section{Evaluation}
 {\it All projects need to contain a serious and careful evaluation of their results. The specifics of the evaluation method (e.g., user study, experiments, formal proof review, etc.) are intrinsic to the nature of the project, so this is something that you must discuss and agree with your supervisor early in the project. Ideally, a presentation of the method and results of your evaluation should be included in its own separate section of the report.}
 
@@ -203,6 +220,8 @@ University Press, Cambridge, 2002.
 
 \bibitem[Mac85] {mf} A. K. Mackworth and E. C. Freuder. The complexity of some polynomial network consistency
 algorithms for constraint satisfaction problems. {\it Artificial Intelligence}, 25:65-74, 1985.
+
+\bibitem[MM00] {bi} Mannila, H; Meek, C. {\it Global Partial Orders from Sequential Data}, Proceedings of sixth ACM SIGKDD international conference on knowledge discovery and data mining, New York, pp161-168, 2000. 
 
 \bibitem[Pan11] {p0} R. Panigrahy, K. Talwar, L. Uyeda, and U. Wieder. Heuristics for Vector Bin Packing {\it Microsoft Research.} 2011
 
