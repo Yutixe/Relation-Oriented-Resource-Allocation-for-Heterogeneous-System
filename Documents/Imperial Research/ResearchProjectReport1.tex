@@ -18,7 +18,7 @@
 
 \begin{document}
 
-\title{Constrained Optimizaton Modelling on Resource Allocation for Shared Hosting Platform }
+\title{Constrained Optimizaton Modelling on Resource Allocation for Distributed Systems }
 
 \author{Teng Yu}
 \date{Fall 2015}
@@ -77,9 +77,54 @@ $$1)\ \forall i,j \in n, A_{i} \parallel A_{j} $$
 $$2)\ \forall i \in n, \bot \preceq A_{i}\ \ \ $$
 Now we consider the union of those RArs $A_{i}$. Some more complexed RArs may contain multi-dimensional resource allocation requests, which can be viewed as request different one-dimensional RArs simultaneously and this can be achieve by the union of $A_{i}$. In this way, we can define a n-dimensional RAr as follows:
 \begin{definition}
+Given $A^{n}$ denote a n-dimensional RAr, then:
 $$ A^{n} = (\forall A_{i}\ i\in n) \bigwedge A_{i}. $$
 \end{definition}
-Finally, we say any kind of resource allocation request can be viewed as a n-dimensional RAr and the topology of RArs model can be built up as a partially order set through the relations we just defined.\\\\
+Finally, we say any kind of resource allocation request can be viewed as a n-dimensional RAr and the topology of RArs model can be built up as a partially order set through the relations we just defined. We give an instance of two-dimensional RAr topology in \textbf{Figure \ref{fig:rar}}. We use $A_{1}(1)$ to represent a one-dimensional RAr which only require 1GHz CPU and $A_{2}(1)$ to represent another one-dimensional RAr requiring 1GB memory. Then $A^{2}(1,1)$ is the union of them and represent a two-dimensional RAr. For easy illustration, we suppose 1GHz CPU and 1GB memory are two atom (or say entry) requests in this instance. As there may be 1.5GHz CPU request in a RAr, we use dash line to denote the relation which contains intern nodes and full line to denote the closed relation. It is not a supervise that we find the result topology is actually a modular lattice.\\\\
+\begin{figure}
+\centering
+\begin{tikzpicture}
+\node (a0) at (10,2) {$A_{2}(2)$};
+\node (a1) at (9,1) {$A_{2}(1)$};
+\node (a2) at (8,0) {$\bot$};
+\node (a3) at (7,1) {$A_{1}(1)$};
+\node (a4) at (6,2) {$A_{1}(2)$};
+\node (a5) at (8,2) {$A^{2}(1,1)$};
+\node (a6) at (7,3) {$A^{2}(2,1)$};
+\node (a7) at (9,3) {$A^{2}(1,2)$};
+\node (a8) at (8,4) {$A^{2}(2,2)$};
+\node (a10) at (11.5,3.5) {$A_{2}(n)$};
+\node (a11) at (10.5,4.5) {$A^{2}(1,n)$};
+\node (a20) at (4.5,3.5) {$A_{1}(n)$};
+\node (a21) at (5.5,4.5) {$A^{2}(n,1)$};
+\node (a100) at (8,7) {$A^{2}(n,n)$};
+\draw[dash pattern=on2pt off3pt] (a5) -- (a6);
+\draw[dash pattern=on2pt off3pt] (a6) -- (a8);
+\draw[dash pattern=on2pt off3pt] (a7) -- (a8);
+\draw (a2) -- (a3);
+\draw (a2) -- (a1);
+\draw[dash pattern=on2pt off3pt] (a4) -- (a3);
+\draw[dash pattern=on2pt off3pt] (9,5) -- (a8);
+\draw[dash pattern=on2pt off3pt] (7,5) -- (a8);
+\draw (a5) -- (a1);
+\draw (a5) -- (a3);
+\draw (a6) -- (a4);
+\draw[dash pattern=on2pt off3pt] (a5) -- (a7);
+\draw[dash pattern=on2pt off3pt] (a0) -- (a1);
+\draw (a0) -- (a7);
+\draw[dash pattern=on2pt off3pt] (a5) -- (a7);
+\draw[dash pattern=on2pt off3pt] (a0) -- (a10);
+\draw[dash pattern=on2pt off3pt] (a11) -- (a100);
+\draw[dash pattern=on2pt off3pt] (a21) -- (a100);
+\draw[dash pattern=on2pt off3pt] (a20) -- (a4);
+\draw[dash pattern=on2pt off3pt] (a21) -- (a6);
+\draw[dash pattern=on2pt off3pt] (a11) -- (a7);
+\draw (a10) -- (a11);
+\draw (a20) -- (a21);
+\end{tikzpicture}
+\caption{2-dimensional(CPU, Memory) RAr topology}
+\label{fig:rar}
+\end{figure}
 
 \noindent{\bf Note:} Instead of the theoretical analysis as above, another way of generating the topology of resource allocation requests, or more generally say {\it informations}, is through real data experiment. One instance of this approach can be refer to [MM00] which tested the web-service requests and also resulted a partially order set. 
 
