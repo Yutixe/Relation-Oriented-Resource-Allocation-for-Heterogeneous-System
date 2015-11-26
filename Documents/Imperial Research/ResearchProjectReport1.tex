@@ -29,7 +29,7 @@
 \begin{abstract}
 {\it The abstract is a very brief summary of the report's contents. It should be about half page long. Somebody unfamiliar with your project should have a good idea of what it is about having read the abstract alone and will know whether it will be of interest to them.}
 \\\\
-This work intend to improve the performance of resource allocating process on shared hosting cloud platform. We research the relations between different resource allocation requirements and compare with the structure inside the cluster. Then involving order theory and ranking functions to model the allocation and constraints more efficient instead of framing the process as a special Linear Programming formulation\cite{s0}. Finally, we say this approach can be used to extend the work on dynamic workloads.
+This work intend to improve the performance of resource allocating process on shared hosting cloud platform. We research the relations between different resource allocation requirements and compare with the structure inside the cluster. Then involving order theory and ranking functions to model the allocation and constraints more efficient instead of framing the process as a special Linear Programming formulation\cite{goossens93}. Finally, we say this approach can be used to extend the work on dynamic workloads.
 %Then we propose to consider a constraint-oriented algorithm, named AC3, to reduce the domain of variables before searching
 \end{abstract}
 $$ $$
@@ -138,7 +138,7 @@ Finally, we say any kind of resource allocation request can be viewed as a n-dim
 \section*{Appendices}
 {\it Appendices contain information that is peripheral to the main body of the report. Information typically included are things like program listings, tables, proofs, graphs, or any other material that would break up the theme of the text if it appeared in situ. Large program listings are rarely required, and should be compressed as much as possible, e.g., by printing in multiple columns and by using small font sizes, omitting inessential detail.}
 \subsection*{Literature Review}
-\subsubsection*{From \cite{s1}:} 
+\subsubsection*{From \cite{goossens93}:} %s1
 Industrial Background: using virtual machine (VM) technology which can consolidate hardware resources to enable shared hosting platforms. \\\\Main achievement: A formulation of the resource allocation problem in shared hosting platform for static workloads to make decisions when allocating hardware resources to service instances.\\\\
 System model:  Show in \textbf{Figure \ref{fig:sit}}
 \begin{figure}
@@ -202,11 +202,11 @@ $$ $$
 About Vector Packing Algorithms:
 Resource Allocation Problem is related to the multi-dimensional version of bin-packing, or say vector packing: our service may have fluid resource needs. Attempt to place d-dimensional vectors into (at most) H bins.
 
-\subsubsection*{From \cite{r1}:}
+\subsubsection*{From \cite{}:}%r1
 A novel approach (Wrasse solver) to resource allocation that permits the problem specification to envelope with ease. The key contribution is defining a specification language for Resource Allocation, which is expressive enough to encode a multitude of allocation problems without using any domain-specific abstractions.\\\\
 Face the fact that: there may be conflicting constraints: a strategy that is optimised for performance may not necessarily meet fault-tolerance requirement.
 
-\subsubsection*{From \cite{s0}:}
+\subsubsection*{From \cite{}:}%s0
 Focus on the theoretical model: In addition of [Sti10], as heterogeneous cases, we consider each server's each resource (or say node's dimension) has two different capacity: Elementary capacity: a single element in each dimension;  Aggregate capacity: total resource capacity counting all elements.
 \\\\
 Compared the MILP model with [Sti10]: Using different vector to represent requirement and needs separately instead of invloving a binary indicator. Add one more constraint to represent the aggregate resource capacities achieved by sum the resource used from all services on this node.
@@ -214,14 +214,14 @@ Compared the MILP model with [Sti10]: Using different vector to represent requir
 Still consider the allocation under two constraints: Rigid requirement and fluid need; Both of them become ordered vector pair. Still precisely define the problem as maximize the minimum yield over all services.
 
 
-\subsubsection*{From \cite{p0} and [Cap01]:}
+\subsubsection*{From \cite{goossens93} and [Cap01]:}
 
 Notes from Heuristics for Vector Bin Packing [Pan11] 
 and Lower bounds and algorithms for the 2-dimensional vector packing problem[Cap01]
 --Focus on the new Heuristics and Experiments model, the way to set up the experiment environment.
 \\\\
 FFD(First Fit Decreasing) Bin-centric view: Open only one bin at any time, place items into this bin from the largest suitable one. Close the bin when no item can be put in. Heuristics: Involve random choosing. Grasp[k]: pick a random one from the best k instead of the bext one. Bubblesearch: the kth best is chosen with a propobability proportional to $(1-p)^k$, for a suitable p.\\\\
-Analysis of FFDAvgSum, which is same as VP\_CPSum in\cite{s1}: For the case when some demands in a dimension always dominate the demands in the other dimension, FFDSum is more robust, the dimensions that are not scare can be assigned smaller coefficients and have a smaller impact on the ordering. Analysis \cite{speranza1999oaa}: the demands across the dimensions were simpled i.i.d.
+Analysis of FFDAvgSum, which is same as VP\_CPSum in\cite{}: For the case when some demands in a dimension always dominate the demands in the other dimension, FFDSum is more robust, the dimensions that are not scare can be assigned smaller coefficients and have a smaller impact on the ordering. Analysis \cite{}: the demands across the dimensions were simpled i.i.d.
 \\\\
 Invloving classes of randomly generated instances to model the 2-dimensional case.
 Using two variables c,d to represent the bins capacities on different dimensions, respectively.
@@ -250,8 +250,13 @@ As for the GDM: It involve two sequential process, one for determine VM allocati
 {\it For projects that result in a new piece of software, you should provide a proper user guide providing easily understood instructions on how to install and use it. A particularly useful approach is to treat the user guide as a walk through of a typical session, or set of sessions, that collectively display all the features of your software. Technical details of how the software works is rarely required. Keep it concise and simple. The extensive use of diagrams illustrating the software in action prove particularly helpful. The user guide is sometimes included as a chapter in the main body of the report, but is often better as an appendix to the main report.}
 
 
-%\bibliographystyle{plain}
-%\bibliography{biblio}
+\bibliographystyle{plain}
+\bibliography{biblio}
+
+
+
+
+\end{document}
 
 
 \begin{thebibliography}{fi99}
@@ -285,9 +290,6 @@ algorithms for constraint satisfaction problems. {\it Artificial Intelligence}, 
 \bibitem[Sti08] {s2} M. Stillwell, D. Schanzenbach, F. Vivien, H. Casanova. Resource Allocation using Virtual Clusters. Technical Report ICS2008-09-01, Information and Computer Sciences Dept., University of Hawai'i at Manoa, Sept. 2008
 
 \end{thebibliography}
-
-
-\end{document}
 
 
 
