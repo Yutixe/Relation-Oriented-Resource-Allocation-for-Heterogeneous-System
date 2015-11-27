@@ -1,0 +1,84 @@
+\documentclass{elsarticle}
+
+
+\usepackage[american]{babel}
+
+%\usepackage{colortbl}
+\usepackage{amsfonts}
+\usepackage[cmex10]{amsmath}
+\usepackage{subfigure}
+\usepackage{amssymb}
+%\usepackage[small,it]{caption}
+%\usepackage{cite}
+%\usepackage{fullpage}
+%\usepackage[paper=letterpaper,centering,margin=1in]{geometry}
+\usepackage{graphicx}
+%\usepackage[frenchlinks]{hyperref}
+\usepackage{url}
+%\usepackage{microtype}
+%\usepackage{relsize}
+%\usepackage{times}
+\usepackage{xspace}
+
+
+
+
+\newtheorem{theorem}{Theorem}
+
+%\addtolength{\belowcaptionskip}{-0.25in}
+%\addtolength{\dbltextfloatsep}{-0.25in}
+%\addtolength{\textfloatsep}{-0.25in}
+%\addtolength{\abovedisplayskip}{-0.05in}
+%\addtolength{\belowdisplayskip}{-0.05in}
+%\linespread{0.93}
+
+\def\baselinestretch{1.4}
+
+\journal{Department of Computing}
+
+\newcommand{\prob}{\textsc{ResAlloc}\xspace}
+\newcommand{\probdec}{\textsc{ResAlloc-Dec}\xspace}
+
+\newcommand{\I}{\mathbb{I}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+
+\newcommand{\GRAY}{\cellcolor{red}}
+
+
+
+%\newcommand{\dfb}{\emph{dfb}\xspace}
+\newcommand{\dfb}{{\itshape dfb}\xspace}
+%\newcommand{\fr}{\emph{fr}\xspace}
+\newcommand{\fr}{{\itshape fr}\xspace}
+
+\begin{document}
+
+\begin{frontmatter}
+
+\title{Constrained Optimization Modelling on Resource Allocation for Distributed Systems}
+
+\author{Teng Yu}
+\ead{t.yu15@imperial.ac.uk}
+
+\address{Distributed Software Engineering Section\\Department of Computing\\
+  Imperial College of Science, Technology and Medicine}
+
+
+
+\begin{abstract}
+This work intends to improve the performance of resource allocation process on heterogeneous distributed systems by designing a novel allocation model. It provides a novel approach to involve order theory to model the allocation process and constraints by research on the relations between different resource allocation requests(RAr) and mapping with the structure inside the cluster of servers, then designing ranking functions on their topology as a metric for optimisation instead of viewing the underlining problem as a multi-dimensional bin-packing instance and framing the process as a special Linear Programming formulation which is common in the literature. It focuses on the modelling process and invokes well-known algorithms in experiment to compare its performance with other models. Finally, we discuss that this approach can be easily extended to apply on not only the fields within distributed systems (such as for cloud computing platform), but also in the wide fields of computer science such as for Information Retrieval and HPC.\\\\
+
+
+\end{abstract}
+
+\begin{keyword}
+  Resource Allocation \sep
+  Optimization Model \sep
+  Distribution Systems\sep 
+
+
+\end{keyword}
+
+\end{frontmatter}
+\end{document}

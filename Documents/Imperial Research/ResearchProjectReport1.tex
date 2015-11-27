@@ -138,7 +138,7 @@ Finally, we say any kind of resource allocation request can be viewed as a n-dim
 \section*{Appendices}
 {\it Appendices contain information that is peripheral to the main body of the report. Information typically included are things like program listings, tables, proofs, graphs, or any other material that would break up the theme of the text if it appeared in situ. Large program listings are rarely required, and should be compressed as much as possible, e.g., by printing in multiple columns and by using small font sizes, omitting inessential detail.}
 \subsection*{Literature Review}
-\subsubsection*{From \cite{goossens93}:} %s1
+\subsubsection*{From \cite{stillwell2010raa}:} %s1
 Industrial Background: using virtual machine (VM) technology which can consolidate hardware resources to enable shared hosting platforms. \\\\Main achievement: A formulation of the resource allocation problem in shared hosting platform for static workloads to make decisions when allocating hardware resources to service instances.\\\\
 System model:  Show in \textbf{Figure \ref{fig:sit}}
 \begin{figure}
@@ -202,47 +202,47 @@ $$ $$
 About Vector Packing Algorithms:
 Resource Allocation Problem is related to the multi-dimensional version of bin-packing, or say vector packing: our service may have fluid resource needs. Attempt to place d-dimensional vectors into (at most) H bins.
 
-\subsubsection*{From \cite{}:}%r1
+\subsubsection*{From \cite{rai2012generalized}:}%r1
 A novel approach (Wrasse solver) to resource allocation that permits the problem specification to envelope with ease. The key contribution is defining a specification language for Resource Allocation, which is expressive enough to encode a multitude of allocation problems without using any domain-specific abstractions.\\\\
 Face the fact that: there may be conflicting constraints: a strategy that is optimised for performance may not necessarily meet fault-tolerance requirement.
 
-\subsubsection*{From \cite{}:}%s0
-Focus on the theoretical model: In addition of [Sti10], as heterogeneous cases, we consider each server's each resource (or say node's dimension) has two different capacity: Elementary capacity: a single element in each dimension;  Aggregate capacity: total resource capacity counting all elements.
+\subsubsection*{From \cite{stillwell2011fdr}:}%s0
+Focus on the theoretical model: In addition of \cite{stillwell2010raa}, as heterogeneous cases, we consider each server's each resource (or say node's dimension) has two different capacity: Elementary capacity: a single element in each dimension;  Aggregate capacity: total resource capacity counting all elements.
 \\\\
-Compared the MILP model with [Sti10]: Using different vector to represent requirement and needs separately instead of invloving a binary indicator. Add one more constraint to represent the aggregate resource capacities achieved by sum the resource used from all services on this node.
+Compared the MILP model with \cite{stillwell2010raa}: Using different vector to represent requirement and needs separately instead of invloving a binary indicator. Add one more constraint to represent the aggregate resource capacities achieved by sum the resource used from all services on this node.
 \\\\
 Still consider the allocation under two constraints: Rigid requirement and fluid need; Both of them become ordered vector pair. Still precisely define the problem as maximize the minimum yield over all services.
 
 
-\subsubsection*{From \cite{goossens93} and [Cap01]:}
+\subsubsection*{From \cite{panigrahy2011heuristics} and \cite{caprara2001lower}:}
 
-Notes from Heuristics for Vector Bin Packing [Pan11] 
-and Lower bounds and algorithms for the 2-dimensional vector packing problem[Cap01]
+Notes from Heuristics for Vector Bin Packing \cite{panigrahy2011heuristics}
+and Lower bounds and algorithms for the 2-dimensional vector packing problem \cite{caprara2001lower}
 --Focus on the new Heuristics and Experiments model, the way to set up the experiment environment.
 \\\\
 FFD(First Fit Decreasing) Bin-centric view: Open only one bin at any time, place items into this bin from the largest suitable one. Close the bin when no item can be put in. Heuristics: Involve random choosing. Grasp[k]: pick a random one from the best k instead of the bext one. Bubblesearch: the kth best is chosen with a propobability proportional to $(1-p)^k$, for a suitable p.\\\\
-Analysis of FFDAvgSum, which is same as VP\_CPSum in\cite{}: For the case when some demands in a dimension always dominate the demands in the other dimension, FFDSum is more robust, the dimensions that are not scare can be assigned smaller coefficients and have a smaller impact on the ordering. Analysis \cite{}: the demands across the dimensions were simpled i.i.d.
+Analysis of FFDAvgSum, which is same as VP\_CPSum in\cite{stillwell2010raa}: For the case when some demands in a dimension always dominate the demands in the other dimension, FFDSum is more robust, the dimensions that are not scare can be assigned smaller coefficients and have a smaller impact on the ordering. Analysis \cite{stillwell2010raa}: the demands across the dimensions were simpled i.i.d.
 \\\\
 Invloving classes of randomly generated instances to model the 2-dimensional case.
 Using two variables c,d to represent the bins capacities on different dimensions, respectively.
 Using Wj and Vj to represent the weights of item j on different dimensions, respectively.
 Using u.d.[a,b] to represent the uniformly distribution of the value for weights of item in the interval [a,b]
 \\\\
-In [Cap01] and [Pan11], the dimensions in the first six classes are independently sampled.
+In  \cite{panigrahy2011heuristics} and \cite{caprara2001lower}, the dimensions in the first six classes are independently sampled.
 In classes seven and eight, the dimensions are correlated. They achieve positive correlation by setup the domain
 of the Vj to be a monotonic function from Wj while achieve negative correlation by setup it to be a inverse function in domain.
 \\\\
-In [Pan11]:
+In \cite{panigrahy2011heuristics}:
 Trivial way to extend to multi-dimension is to set dimension (2i-1) and (2i) are correlated as dimension 1 and 2,
 while independent of the other dimensions. As for generate negative correlation across all dimensions:
 Random variables to denote the random distribution of balls in each dimension, totally 2 times of the dimensions.
-Multiply with an random coeffieient from [10,40] and over two (Why?). Further noise by adding a random value from [0,1].
+Multiply with an random coeffieient from [10,40] and over two. Further noise by adding a random value from [0,1].
 Ignored the overwight item.  
 
-\subsubsection*{From [Van09]:}
+\subsubsection*{From \cite{van2009sla}:}
 This work presents an automatic virtual resource management system for Cloud infrastructures (hosting service platforms). The main advantages include: it can automate the dynamic provisioning and placement of VMs; support for heterogeneous applications and workloads; support for arbitrary application topology.\\\\
 Focus on the automatic virtual resource management system:\\\\ 
-It contains a more complicate system model, or say architecture, to simulate the resource allocation scenario which is more closed to the really world cloud infrastructures. Instead of using bins and balls to represent, this model composed by Application Environment (AE), Local Decision Module (LDM), Global Decision Module (GDM) and datacenter which contains physical machines and VMs. Briefly, we can say that AE is faced to the application associated with specific performance goals; An application-specific LDM is associated with each AE to evaluate the process baed on the current workload using service-level metric and generate a utility function of the resource allocation; A GDM is used to interact with each LDM and the real-datacenter. It is the core of this system which contains the Constraint solver to determine the management actions based on the input of LDM's utility functions and datacenter's system-level performance metrics. It works like a black box compared with LDM. We prefer to refer to the fig.2 in [Van09] of the system graph.\\\\
+It contains a more complicate system model, or say architecture, to simulate the resource allocation scenario which is more closed to the really world cloud infrastructures. Instead of using bins and balls to represent, this model composed by Application Environment (AE), Local Decision Module (LDM), Global Decision Module (GDM) and datacenter which contains physical machines and VMs. Briefly, we can say that AE is faced to the application associated with specific performance goals; An application-specific LDM is associated with each AE to evaluate the process baed on the current workload using service-level metric and generate a utility function of the resource allocation; A GDM is used to interact with each LDM and the real-datacenter. It is the core of this system which contains the Constraint solver to determine the management actions based on the input of LDM's utility functions and datacenter's system-level performance metrics. It works like a black box compared with LDM. We prefer to refer to the fig.2 in \cite{van2009sla} of the system graph.\\\\
 Two utility functions in LDM: a fixed service-level function and a dynamic resource-level function which is communicated with GDM and updated for every iteration. VM allocation vectors in LDM are used for build up the upper bound constraints given by each application.\\\\
 As for the GDM: It involve two sequential process, one for determine VM allocation vectors for each application (VM Provisioning) and then for placing VMs and PMs and achieving optimisation (VM Packing). Beyond the constraints formulations based on the CPU and Memory, an interesting approach in VM Provisioning is using a coefficient to allow the administrator to trade-off between the fulfilment of the performance goals and the cost of operating the required resources. Another interesting method is illustrated during the optimisation process in VM Packing: To minimise the number of migration required to reach the new VM-to-PM assignment, or say minimise the reconfiguration to provide a strategy with few interim steps and maximum degree of parallelism.  
 
