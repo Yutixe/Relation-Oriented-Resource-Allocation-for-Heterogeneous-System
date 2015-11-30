@@ -28,8 +28,7 @@
 
 \begin{abstract}
 {\it The abstract is a very brief summary of the report's contents. It should be about half page long. Somebody unfamiliar with your project should have a good idea of what it is about having read the abstract alone and will know whether it will be of interest to them.}
-\\\\
-This work intend to improve the performance of resource allocating process on shared hosting cloud platform. We research the relations between different resource allocation requirements and compare with the structure inside the cluster. Then involving order theory and ranking functions to model the allocation and constraints more efficient instead of framing the process as a special Linear Programming formulation\cite{goossens93}. Finally, we say this approach can be used to extend the work on dynamic workloads.
+\\\\This work intends to improve the performance of resource allocation process on heterogeneous distributed systems by designing a novel allocation model. It provides a novel approach to involve order theory to model the allocation process and constraints by research on the relations between different resource allocation requests(RAr) and mapping with the structure inside the cluster of servers, then designing ranking functions on their topology as a metric for optimisation instead of viewing the underlining problem as a multi-dimensional bin-packing instance and framing the process as a special Linear Programming formulation which is common in the literature. It focuses on the modelling process and invokes well-known algorithms in experiment to compare its performance with other models. Finally, we discuss that this approach can be easily extended to apply on not only the fields within distributed systems (such as for cloud computing platform), but also in the wide fields of computer science such as for Information Retrieval and HPC.\\\\
 %Then we propose to consider a constraint-oriented algorithm, named AC3, to reduce the domain of variables before searching
 \end{abstract}
 $$ $$
@@ -57,8 +56,11 @@ $$ $$
 \section{Body of report-Original Ideas}
 {\it The central part of the report typically consists of three of four chapters detailing the technical work undertaken during the project. The structure of these chapters is highly project dependent. Usually they reflect the chronological development of the project, e.g., design, implementation, experimentation, and optimisation, although this is not always the best approach. However you choose to structure this part of the report, you should make it clear how you arrived at your chosen approach in preference to the other alternatives documented in the background. For implementation projects you should describe and justify the design of your system at some high level, for example by using any of the design methods taught during the first- and second-term courses, and should document any interesting problems with, or features of, your implementation. Integration and testing are also important to describe. Your supervisor will advise you on the most suitable structure for these middle sections.}
 $$ $$
+
+\section{Basic RArs}
+In this section, we discuss the relation between basic resource allocation requests (RArs). We assume RArs are independent between different dimensions in the theoretical case and focus on the relation of RArs in each dimension to build up their foundation model.
 \subsection{RArs Relations}
-Consider to handle with resource that have difficult-to-represent capacities. User's request may be special on different processing element (heterogeneous)or say the relation between them. Then we find the capacity of a cluster is the set of all allocation request that it can service. Try to give a relation between resource allocation requests(RAr):
+Consider to handle with resource that have difficult-to-represent capacities. User's request may be special on different processing element (heterogeneous)or say the relation between them. Then we find the capacity of a cluster is the set of all allocation request that it can service. Try to give a relation between RArs:
 \begin{definition}
 Given the relation $\preceq$ between RAr:
 $$ \forall \alpha \in a\ cluster\ device, \exists A,B \in RAr, such\ that\ A \preceq B\ \Leftrightarrow \alpha{(B)} \mapsto \alpha{(A)}. $$
@@ -67,9 +69,8 @@ We say $\alpha{(B)}$ is true iff $\alpha$ can service B. Then we can define a pa
 \begin{definition}
 $$ \forall A,B \in RAr, A\npreceq B\ \wedge B\npreceq A\ \Leftrightarrow A \parallel B. $$
 \end{definition}
-Followed by defining relations between user's requests, we can try to build a closed topology involving those requests. It will be more likely a lattice as we can ordered those requests by inclusion through the relation we just defined. As the topology inside a cluster device can be viewed as a littice as well by considering that the intersection of subset servers in cluster, it leads to a possibility to achieve mappings during the allocating process.\\\\ A trivial approach from the order theory is to consider Birkhoff's representation theory, which says modular lattice can be represented by down-sets of its corresponding partial order composed by join-irreducible elements. Then it is easy to view the RArs as downset of the lattice of cluster topology. Then 
+Followed by defining relations between user's requests, we can try to build a closed topology involving those requests. It will be more likely a lattice as we can ordered those requests by inclusion through the relation we just defined. As the topology inside a cluster device can be viewed as a littice as well by considering that the intersection of subset servers in cluster, it leads to a possibility to achieve mappings during the allocating process.\\\\ A trivial approach from the order theory is to consider Birkhoff's representation theory, which says modular lattice can be represented by down-sets of its corresponding partial order composed by join-irreducible elements \cite{davey2002introduction}. Then it is easy to view the RArs as downset of the lattice of cluster topology. Then 
 it remains to create a metric or say ranking function to compare the performance between different mapping.
-
 \subsection{RArs Model}
 Consider there is a common foundation of all RArs which is  a non resource needed request, we represent it as $\bot$. \\\\ 
 Say there are some kind of basic RArs which hold only one dimension of resource need. For instance, one RAr, named $A_{1}$, may only need some CPU capacity for computation while another, named $A_{2}$, just need some memory capacity to record information. It is easy to verify that not all cluster devices which can service $A_{1}$ can service $A_{2}$ and vise versa. So in this case, $A_{1}$ and $A_{2}$ are parallel while $\bot$ $\preceq$ $A_{1}$,$A_{2}$. Then it is also easy to extend this instance to the real case that there will be a large number $n$ of different dimensions of RArs, and we have the following two conditions:
@@ -126,11 +127,120 @@ Finally, we say any kind of resource allocation request can be viewed as a n-dim
 \label{fig:rar}
 \end{figure}
 
-\noindent{\bf Note:} Instead of the theoretical analysis as above, another way of generating the topology of resource allocation requests, or more generally say {\it informations}, is through real data experiment. One instance of this approach can be refer to [MM00] which tested the web-service requests and also resulted a partially order set. 
+\noindent{\bf Note:} Instead of the theoretical analysis as above, another way of generating the topology of resource allocation requests, or more generally say {\it informations}, is through real data experiment. One instance of this approach can be refer to \cite{mannila2000global} which tested the web-service requests and also resulted a partially order set. 
+
+\section{MPC-X RArs}
+%ask for reference
+Now we consider the MPC-X system with the additional constraints between RArs as a practical case. This is a real extended scenario that a RAr can request different server to work for it or say allocate to it simultaneously which break the classical constraints for any bin-packing problem model as they all limit that one ball can only be allocated to exactly one bin.\\\\ In this section, we first briefly describe the topology of MPC-X device and then model the RArs based on its special relations. 
+\subsection{MPC-X topology and RAr relations}
+An abstract MPC-X device contains eight servers arranged in a ring. We assume the servers are homogeneous in a device. Then there are two types of RArs: one for singleton servers whilst another for adjacent servers. We use $S_{n}$ (n=1...8) to represent the first type RArs while $A_{n}$ (n=1...8) to represent the second and in both of them, the index represent the number of server it requested.\\\\
+Then it is easy to say the foundation relation below:
+$$1)\ \forall i \in (1,...,n-1), S_{i} \preceq S_{i+1} $$
+$$2)\ \forall i \in (1,...,n-1), A_{i} \preceq A_{i+1} $$
+$$3)\ \forall i \in (1,...,n), S_{i} \preceq A_{i}\ \ \ \ \ \ \ \ $$
+$$4)\ \ \ \ \ \ \ A_{1}=S_{1}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ $$
+$$5)\ \ \ \ \ \ \ A_{7}=S_{7}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ $$
+$$6)\ \ \ \ \ \ \ A_{8}=S_{8}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ $$
+$$5)\ \ \ \ \ \ \ A_{2}\preceq S_{5}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ $$
+$$6)\ \ \ \ \ \ \ A_{3}\preceq S_{6}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ $$
+
+\subsection{Special RAr model}
+We give the RArs model of the MPC-X device below \textbf{Figure \ref{fig:rarX}}, ignored the totally-ordered part for easy illustration. As mentioned in section 4.1, we apply Birkhoff's representation theory to map this partial order set to a downset lattice which can be referred to \textbf{Figure \ref{fig:rarXB}}. We use $B_{i}$ to label the graph instead of using the downset label directly to make it more concisely. To illustrate the correspondence, for example, we know $B_{1}$=$S_{2}$ while $B_{14}$ is the downset of $S_{6} \cup A_{4}$ which contains \{$S_{6},S_{5},S_{4},S_{3},S_{2},A_{4},A_{3},A_{2}$\}. \\\\
+\noindent{\bf Note:} A general result we can inferred from this instance is that the RAr topology from any practical or say industrial distributed systems can be modelled as a modular-lattice by our representation and Birkhoff's theorem.\\\\
+Let's then focus on the new modular-lattice model, actually it contains some really additional {\it interesting} nodes which we just ignored in our first MPC-X RAr topology. For instance, we still use the $B_{14}$ we just mentioned above for illustration. There cannot be any single node in the pervious topology to exactly represent the scenario of the union of $S_{6}$ and $A_{4}$. (If we say $A_{6}$, then we find that its capacity is beyond our needs as a scenario in which six servers can work while five of them are adjacent can serve our need but it doesn't satisfy $A_{6}$.) On the other hand, the total sets of node in this new modular-lattice model can represent all the possible scenarios of RAr for the device based on its downward-close character. 
+
+\subsection{Metric on RAr model}
+At this step, we can begin to consider a metric on this lattice-model to represent the distance between different RArs. A common metric on modular-lattice is a {\it valuation} computed by a ranking function.
+
+\begin{figure}
+\centering
+\begin{tikzpicture}
+\node (a0) at (2,0){$S_{2}$};
+\node (a1) at (1,1) {$S_{3}$};
+\node (a2) at (1,2) {$S_{4}$};
+\node (a4) at (3,1) {$A_{2}$};
+\node (a5) at (3,2) {$A_{3}$};
+\node (a6) at (3,3) {$A_{4}$};
+\node (a7) at (3,4) {$A_{5}$};
+\node (a8) at (2,5) {$A_{6}$};
+\node (a10) at (1,3) {$S_{5}$};
+\node (a11) at (1,4) {$S_{6}$};
+\draw (a0) -- (a1);
+\draw (a2) -- (a1);
+\draw (a0) -- (a4);
+\draw (a5) -- (a4);
+\draw (a6) -- (a5);
+\draw (a7) -- (a6);
+\draw (a7) -- (a8);
+\draw (a11) -- (a8);
+\draw (a11) -- (a10);
+\draw (a2) -- (a10);
+\draw (a1) -- (a5);
+\draw (a2) -- (a6);
+\draw (a7) -- (a10);
+\draw (a4) -- (a10);
+\draw (a5) -- (a11);
+\end{tikzpicture}
+\caption{MPC-X RAr topology}
+\label{fig:rarX}
+\end{figure}
+
+\begin{figure}
+\centering
+\begin{tikzpicture}
+\node (a0) at (2,0){$B_{1}$};
+\node (a1) at (1,1) {$B_{2}$};
+\node (a2) at (3,1) {$B_{3}$};
+\node (a4) at (2,2) {$B_{4}$};
+\node (a5) at (0,2) {$B_{5}$};
+\node (a6) at (1,3) {$B_{6}$};
+\node (a7) at (3,3) {$B_{7}$};
+\node (a8) at (2,4) {$B_{8}$};
+\node (a10) at (0,4) {$B_{9}$};
+\node (a11) at (1,5) {$B_{10}$};
+\node (a12) at (3,5){$B_{11}$};
+\node (a13) at (2,6) {$B_{12}$};
+\node (a14) at (0,6) {$B_{13}$};
+\node (a15) at (1,7) {$B_{14}$};
+\node (a16) at (3,7) {$B_{15}$};
+\node (a17) at (2,8) {$B_{16}$};
+\node (a18) at (2,9) {$B_{17}$};
+\draw (a0) -- (a1);
+\draw (a4) -- (a6);
+\draw (a2) -- (a0);
+\draw (a1) -- (a4);
+\draw (a2) -- (a4);
+\draw (a1) -- (a5);
+\draw (a4) -- (a7);
+\draw (a7) -- (a8);
+\draw (a5) -- (a6);
+\draw (a6) -- (a8);
+\draw (a6) -- (a10);
+\draw (a11) -- (a10);
+\draw (a11) -- (a8);
+\draw (a13) -- (a12);
+\draw (a13) -- (a11);
+\draw (a8) -- (a12);
+\draw (a15) -- (a14);
+\draw (a15) -- (a13);
+\draw (a17) -- (a15);
+\draw (a17) -- (a16);
+\draw (a17) -- (a18);
+\draw (a14) -- (a11);
+\draw (a16) -- (a13);
+\end{tikzpicture}
+\caption{MPC-X RAr lattice-topology}
+\label{fig:rarXB}
+\end{figure}
+
 
 \section{Evaluation}
-{\it All projects need to contain a serious and careful evaluation of their results. The specifics of the evaluation method (e.g., user study, experiments, formal proof review, etc.) are intrinsic to the nature of the project, so this is something that you must discuss and agree with your supervisor early in the project. Ideally, a presentation of the method and results of your evaluation should be included in its own separate section of the report.}
-
+{\it All projects need to contain a serious and careful evaluation of their results. The specifics of the evaluation method (e.g., user study, experiments, formal proof review, etc.) are intrinsic to the nature of the project, so this is something that you must discuss and agree with your supervisor early in the project. Ideally, a presentation of the method and results of your evaluation should be included in its own separate section of the report.}\\\\
+\subsection{Evaluation architecture}
+Three prototype programs are implemented in this step. The first one is a one-dimensional bin packing program by basic linear programming approach. It contains a tiny input size composed by 3 balls and 2 bins and a basic greedy search algorithm which we used as the benchmark of our following experiment. The second one is a two-dimensional bin packing program which is trivially extended from the first one by parallel adding the second dimension. It contains a little larger input size compared with the first one which we used as the basic input instance for multi-dimensional pin packing program. \\\\
+Our new model is implemented from the third prototype program which is a one-dimensional bin packing program with the same tiny input size of program one, but the allocation is represented by a lattice which using the domain of bins to represent the balls and the values in the domain to represent the size of each bin.
+\subsection{Evaluation Results}
+We compare the program one and three. When both of them find the same solution, the model building time and resolution time used for program three are all less than the program one. 
 \section{Conclusions and Future work}
 {\it All good projects conclude with an objective evaluation of the project's successes and failures, and suggestions for future work that can take the project further. It is important to understand that there is no such thing as a perfect project. Even the very best pieces of work have their limitations and you are expected to provide a proper critical appraisal of what you have done. Your assessors are bound to spot the limitations of your work and you are expected to be able to do the same.}
 
@@ -246,9 +356,14 @@ It contains a more complicate system model, or say architecture, to simulate the
 Two utility functions in LDM: a fixed service-level function and a dynamic resource-level function which is communicated with GDM and updated for every iteration. VM allocation vectors in LDM are used for build up the upper bound constraints given by each application.\\\\
 As for the GDM: It involve two sequential process, one for determine VM allocation vectors for each application (VM Provisioning) and then for placing VMs and PMs and achieving optimisation (VM Packing). Beyond the constraints formulations based on the CPU and Memory, an interesting approach in VM Provisioning is using a coefficient to allow the administrator to trade-off between the fulfilment of the performance goals and the cost of operating the required resources. Another interesting method is illustrated during the optimisation process in VM Packing: To minimise the number of migration required to reach the new VM-to-PM assignment, or say minimise the reconfiguration to provide a strategy with few interim steps and maximum degree of parallelism.  
 
+\subsubsection*{From \cite{vakilinia2015modeling}:}
+Instead of pervious works, this paper model the resource allocation problem based on the job-scheduling scenario which put special emphasis on the working-time issue. It considers the randomness by involving Poisson processing during service time. Then it solves the new issues aroused by this model which including probability distribution and job blocking. It analysis the different cases for VMs, job sizes and release time, respectively.
+
 \section*{User Guide}
 {\it For projects that result in a new piece of software, you should provide a proper user guide providing easily understood instructions on how to install and use it. A particularly useful approach is to treat the user guide as a walk through of a typical session, or set of sessions, that collectively display all the features of your software. Technical details of how the software works is rarely required. Keep it concise and simple. The extensive use of diagrams illustrating the software in action prove particularly helpful. The user guide is sometimes included as a chapter in the main body of the report, but is often better as an appendix to the main report.}
 
+
+We use Java-Choco \cite{choco3} solver to implement the experimental programme. 
 
 \bibliographystyle{plain}
 \bibliography{biblio}
