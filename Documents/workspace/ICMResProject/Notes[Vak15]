@@ -1,0 +1,6 @@
+Instead of pervious works, this paper model the resource allocation problem 
+based on the job-scheduling scenario which put special emphasis on the working-time issue. 
+
+It considers the randomness by involving Poisson processing during service time. 
+Then it solves the new issues aroused by this model which including probability distribution and job blocking. 
+It analysis the different cases for VMs, job sizes and release time, respectively.
