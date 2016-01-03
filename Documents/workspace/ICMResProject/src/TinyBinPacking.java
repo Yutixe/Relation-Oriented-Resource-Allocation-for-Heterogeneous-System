@@ -64,7 +64,7 @@ public class TinyBinPacking {
         Chatterbox.printStatistics(solver);
         
         //print out our own solution
-        for (int bin = 0; bin < nBins; bin++) {
+/*        for (int bin = 0; bin < nBins; bin++) {
         	System.out.print("Bin " + bin + ": ");
         	for (int object = 0; object < nObjects; object++) {
         		if (binPacking[bin][object].getValue() == 1) {     //if object is in bin
@@ -72,7 +72,7 @@ public class TinyBinPacking {
         		}
         	}
         	System.out.println("[" + binLoad[bin].getValue() + "]");    //print the bin load
-        }        
-	}
+       }        
+*/	}
 
 }
