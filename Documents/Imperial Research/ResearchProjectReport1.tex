@@ -22,7 +22,7 @@
 \title{Relation-Oriented Lattice-Model for Resource Allocation in Heterogenous Distributed Systems\footnote{M.Res. Research Project, Department of Computing, Imperial College London} }
 
 \author{Teng Yu\footnote{Corresponding email: {\it t.yu15@imperial.ac.uk}}}
-\date{3rd Jan. 2016}
+\date{10th Jan. 2016}
 
 \maketitle
 \newpage
@@ -254,19 +254,19 @@ In this section, we discuss the relation between basic homogenous resource alloc
 \subsection{RArs Relations}
 Consider to handle with resource that have difficult-to-represent capacities. User's request may be special on different processing element or say the relation between them. Then we find the capacity of a cluster is the set of all allocation request that it can service. Try to give a relation between RArs:
 \begin{definition}
-Given the relation $\preceq$ between RAr:
-$$ \forall \alpha \in a\ cluster\ device, \exists A,B \in RAr, such\ that\ A \preceq B\ \Leftrightarrow \alpha{(B)} \mapsto \alpha{(A)}. $$
+Given the relation $\leq$, named less than, between RAr:
+$$ \forall \alpha \in a\ cluster\ device, \exists A,B \in RAr, such\ that\ A \leq B\ \Leftrightarrow \alpha{(B)} \mapsto \alpha{(A)}. $$
 \end{definition}
-We say $\alpha{(B)}$ is true iff $\alpha$ can service B. Then we can define a parallel relation between RArs as follow:
+We say $\alpha{(B)}$ is true iff $\alpha$ can serve B. Then in this definition, A less than B means A asks for less cluster's capacities than B. We also give the more constraint relation, A $\preceq$ B, named A is covered by B iff A is less than B and there is no interim nodes between A and B. Then we can define a parallel relation between RArs as follow:
 \begin{definition}
-$$ \forall A,B \in RAr, A\npreceq B\ \wedge B\npreceq A\ \Leftrightarrow A \parallel B. $$
+$$ \forall A,B \in RAr, A\nleq B\ \wedge B\nleq A\ \Leftrightarrow A \parallel B. $$
 \end{definition}
 Followed by defining relations between user's requests, we can try to build a closed topology involving those requests. It will be more likely a lattice as we can ordered those requests by inclusion through the relation we just defined. As the topology inside a cluster device can be viewed as a littice as well by considering that the intersection of subset servers in cluster, it leads to a possibility to achieve mappings during the allocating process.\\\\ %A trivial approach from the order theory is to consider Birkhoff's representation theory, which says modular lattice can be represented by down-sets of its corresponding partial order composed by join-irreducible elements as mentioned in definition 12 above. Then it is easy to view the RArs model as downset of the lattice of cluster topology. %Then it remains to create a metric or say ranking function to compare the performance between different mapping.
 \subsection{RArs Model}
 Consider there is a common foundation of all RArs which is  a non resource needed request, we represent it as $\bot$. \\\\ 
-Say there are some kind of basic RArs which hold only one dimension of resource need. For instance, one RAr, named $A_{1}$, may only need some CPU capacity for computation while another, named $A_{2}$, just need some memory capacity to record information. It is easy to verify that not all cluster devices which can service $A_{1}$ can service $A_{2}$ and vise versa. So in this case, $A_{1}$ and $A_{2}$ are parallel while $\bot$ $\preceq$ $A_{1}$,$A_{2}$. Then it is also easy to extend this instance to the real case that there will be a large number $n$ of different dimensions of RArs, and we have the following two conditions:
+Say there are some kind of basic RArs which hold only one dimension of resource need. For instance, one RAr, named $A_{1}$, may only need some CPU capacity for computation while another, named $A_{2}$, just need some memory capacity to record information. It is easy to verify that not all cluster devices which can service $A_{1}$ can service $A_{2}$ and vise versa. So in this case, $A_{1}$ and $A_{2}$ are parallel while $\bot$ $\leq$ $A_{1}$,$A_{2}$. Then it is also easy to extend this instance to the real case that there will be a large number $n$ of different dimensions of RArs, and we have the following two conditions:
 $$1)\ \forall i,j \in n, A_{i} \parallel A_{j} $$ 
-$$2)\ \forall i \in n, \bot \preceq A_{i}\ \ \ $$
+$$2)\ \forall i \in n, \bot \leq A_{i}\ \ \ $$
 Now we consider the union of those RArs $A_{i}$. Some more complexed RArs may contain multi-dimensional resource allocation requests, which can be viewed as request different one-dimensional RArs simultaneously and this can be achieve by the union of $A_{i}$. In this way, we can define a n-dimensional RAr as follows:
 \begin{definition}
 Given $A^{n}$ denote a n-dimensional RAr, then:
@@ -427,7 +427,8 @@ In this section, we first briefly show the topology of MPC-X device by a figure 
 \end{figure}
 
 \subsection{MPC-X Topology and RAr Relations}
-An abstract MPC-X device contains eight DFEs/servers\footnote{We use servers instead of DFEs in the following discussion to make the report more consistent.} arranged in a ring as shown in \textbf{Figure \ref{fig:mpc}}. We assume the servers are homogeneous in this device. Then there are two types of RArs: one for singleton servers whilst another for adjacent servers. Compared with the theoretical analysis in above section, this general practical scenario contains non-independent and multi-server RArs which contains all the features we discussed before.\\\\  
+An abstract MPC-X device contains eight DFEs/servers\footnote{We use servers instead of DFEs in the following discussion to make the report more consistent.} arranged in a ring as shown in \textbf{Figure \ref{fig:mpc}}. We assume the servers are homogeneous in this device. Then there are two types of RArs: one for singleton servers whilst another for adjacent servers. Singleton RArs means we only need certain amount of servers to work for this request and no constraints on the physical positions of servers in the device;
+Adjacent RArs means we need certain amount of neighboured servers to work on it instead. Compared with the theoretical analysis in above section, this general practical scenario includes non-independent and multi-server RArs which contains all the features we discussed before.\\\\  
 We use $S_{n}$ (n=1...8) to represent the singleton type RArs while $A_{n}$ (n=1...8) to represent the adjacent type and in both of them, the index represent the number of servers it requested. Then it is easy to say the foundational relations below:
 $$1)\ \forall i \in (1,...,n-1), S_{i} \preceq S_{i+1} $$
 $$2)\ \forall i \in (1,...,n-1), A_{i} \preceq A_{i+1} $$
@@ -435,8 +436,8 @@ $$3)\ \forall i \in (1,...,n), S_{i} \preceq A_{i}\ \ \ \ \ \ \ \ $$
 $$4)\ \ \ \ \ \ \ A_{1}=S_{1}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ $$
 $$5)\ \ \ \ \ \ \ A_{7}=S_{7}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ $$
 $$6)\ \ \ \ \ \ \ A_{8}=S_{8}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ $$
-$$5)\ \ \ \ \ \ \ A_{2}\preceq S_{5}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ $$
-$$6)\ \ \ \ \ \ \ A_{3}\preceq S_{6}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ $$
+$$7)\ \ \ \ \ \ \ A_{2}\preceq S_{5}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ $$
+$$8)\ \ \ \ \ \ \ A_{3}\preceq S_{6}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ $$
 
 \subsection{MPC-X RArs Initial Topology}
 We give the initial RArs topology of the MPC-X device below \textbf{Figure \ref{fig:rarX}} and ignore the totally-ordered part for easy illustration. It is totally based on the 6 classes of relations we formalised above.\\\\
@@ -491,7 +492,7 @@ Let $L$ be a modular lattice. The ranking $f$ on $L$ is a function  $f: L \right
 $\forall$ x,y $\in$ $L$: $$(1)\ f(x)=f(y)+1\ \Leftrightarrow y  \preceq x;$$ $$(2)\  f(x)= 0\ \Leftrightarrow x=\bot.$$ 
 \end{definition}
 The potential benefit of this metric is for direct the allocation. We can update the typical resource allocation algorithms, such as the First Fit and Best Fit by adding this metric to direct the search or use it as a eigenvalue to design supervised learning methods.\\\\
-\noindent{\bf Complexity analysis:} This ranking function is easy to compute on any modular lattice in polynomial time complexity, or say within O(nlogn) in which n is the amount of RArs. Based on a greedy approach, we can first define the ranking of a empty RAr to be zero as it must be a bottom in the topology and label the following nodes through binary search in which we labeled by adding one to each child node from its parent node iteratively. This is by the case that within the result modular lattice, one node will connect with at most two nodes in one direction. Recall the complexity of implementing the representation process is also within polynomial time, then we can say the complexity of the whole process to compute ranking over arbitrary resource allocation topology is in polynomial time.\\\\
+\noindent{\bf Complexity analysis:} This ranking function is easy to compute on any modular lattice in polynomial time complexity, or say within O(n) in which n is the amount of RArs. Based on a greedy approach, we can first define the ranking of a empty RAr to be zero as it must be a bottom in the topology and label the following nodes through iterative search in which we labeled by adding one to each child node from its parent node iteratively. This is by the case that within the result modular lattice, one node will connect with at most two nodes in one direction. Recall the complexity of implementing the representation process is also within polynomial time, then we can say the complexity of the whole process to compute ranking over arbitrary resource allocation topology is in polynomial time.\\\\
 Note that it is in NP-hard to compute such a ranking function even there is in a general poset topology which is as same as solving {\it topological sorting} problem. We cannot compute all the possible different linear extensions of a typical poset in polynomial time, so cannot label them as well. Then from a complexity point of view, another achievement our approach for ranking the general RArs topology reduce a NP problem into P-time scenario.  
 
 \begin{figure}
@@ -645,7 +646,7 @@ The Eclipse IDE can be downloaded from the URL: $${\it https://eclipse.org/downl
 The Choco solver should be added in the project's referenced libraries and the jar file we used is {\it choco-solver-3.3.3-with-dependencies.jar} which can be free downloaded from the URL: $$ http://choco-solver.org/Download?q=releases$$
 The source codes of our prototype programs are open and can be downloaded from the project account in Imperial College's Gitlab: $$ https://gitlab.doc.ic.ac.uk/ty215/MResProjectIC.git $$
 
-
+\newpage
 \bibliographystyle{plain}
 \bibliography{biblio}
 
